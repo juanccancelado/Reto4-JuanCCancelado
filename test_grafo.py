@@ -6,25 +6,35 @@ from DataStructures.Priority_queue import priority_queue as pq
 def test():
 
     grafo = gr.new_graph(5)
-    gr.insert_vertex(grafo, "A", 1)
-    gr.insert_vertex(grafo, "B", 2)
-    gr.insert_vertex(grafo, "C", 3)
+    gr.insert_vertex(grafo, 0, "A")
+    gr.insert_vertex(grafo, 1, "B")
+    gr.insert_vertex(grafo, 2, "C")
+    gr.insert_vertex(grafo, 3, "D")
+    gr.insert_vertex(grafo, 4, "E")
+    gr.insert_vertex(grafo, 5, "F")
+    gr.insert_vertex(grafo, 6, "G")
+    gr.insert_vertex(grafo, 7, "H")
 
-    gr.add_edge(grafo, "A", "B", 1)
-    gr.add_edge(grafo, "A", "C", 2)
-    gr.add_edge(grafo, "B", "C", 3)
+    gr.add_edge(grafo, 0, 1, 5)
+    gr.add_edge(grafo, 0, 7, 8)
+    gr.add_edge(grafo, 0, 4, 9)
+    gr.add_edge(grafo, 1, 3, 15)
+    gr.add_edge(grafo, 1, 2, 12)
+    gr.add_edge(grafo, 1, 7, 4)
+    gr.add_edge(grafo, 3, 6, 9)
+    gr.add_edge(grafo, 2, 6, 11)
+    gr.add_edge(grafo, 2, 3, 3)
+    gr.add_edge(grafo, 7, 2, 7)
+    gr.add_edge(grafo, 7, 5, 6)
+    gr.add_edge(grafo, 4, 7, 5)
+    gr.add_edge(grafo, 4, 5, 4)
+    gr.add_edge(grafo, 4, 6, 20)
+    gr.add_edge(grafo, 5, 2, 1)
+    gr.add_edge(grafo, 5, 6, 13)
+  
 
-    peque = pq.new_heap(compare)
-    pq.insert(peque, 1)
-    pq.insert(peque, 2)
-    pq.insert(peque, 4)
-    pq.insert(peque, 5)
-    pq.insert(peque, 8)
-    pq.insert(peque, 10)
-    pq.insert(peque, 15)
+    print(ds.dijkstra(grafo, 0))
     
-    print(peque)
-    print(pq.remove(peque))
 
     pass
 

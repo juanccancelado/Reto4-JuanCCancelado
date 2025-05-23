@@ -21,10 +21,19 @@ def new_dijsktra_structure(source, g_order):
         "source": source,
         "visited": mp.new_map(
             g_order, 0.5),
-        "pq": pq.new_heap(),
+        "pq": pq.new_heap(comparison),
         "predecessors": {}
         }
     return structure
+
+def comparison(a, b):
+    # a and b are tuples: (distance, vertex)
+    if a[0] == b[0]:
+        return 0
+    elif a[0] < b[0]:
+        return 1  # menor distancia = mayor prioridad
+    else:
+        return -1
 
 def dijkstra(my_graph, source):
     
@@ -32,31 +41,25 @@ def dijkstra(my_graph, source):
         raise Exception("El grafo está vacío, no se puede ejecutar Dijkstra.")
     else:
         aux_structure = new_dijsktra_structure(source, gr.order(my_graph))
-        pq.insert(aux_structure["pq"], source, 0)
-        mp.put(aux_structure["visited"], source, 0)
-        while not pq.is_empty(aux_structure["pq"]):
-            vertex = pq.remove(aux_structure["pq"])
-            # Get the adjacents of the current vertex as a list of dictionaries
-            adjacents = mp.value_set(gr.adjacents(my_graph, vertex))
-            # Iterate through each adjacent vertex
-            for adj in adjacents["elements"]:
-                neighbor = adj["to"]      # The adjacent vertex
-                weight = adj["weight"]    # The weight of the edge to the neighbor
+        pq.insert(aux_structure["pq"], (0, source, None))  # None porque el source no tiene predecesor
 
-                # Check if the neighbor has been visited using the map's get function
+        while not pq.is_empty(aux_structure["pq"]):
+
+            current_distance, vertex, predecessor = pq.remove(aux_structure["pq"])
+
+            if mp.get(aux_structure["visited"], vertex) is not None:
+                continue
+            mp.put(aux_structure["visited"], vertex, current_distance)
+            if predecessor is not None:
+                aux_structure["predecessors"][vertex] = predecessor
+            adjacents = mp.value_set(gr.adjacents(my_graph, vertex))
+            for adj in adjacents["elements"]:
+                neighbor = adj["to"]
+                weight = adj["weight"]
                 if mp.get(aux_structure["visited"], neighbor) is None:
-                    # Calculate the new distance from the source to this neighbor
-                    new_distance = weight + dist_to(vertex, aux_structure)
-                    # If this path is shorter, or the neighbor hasn't been reached before
-                    if (mp.get(aux_structure["visited"], neighbor) is None or
-                        new_distance < dist_to(neighbor, aux_structure)):
-                        # Insert the neighbor into the priority queue with the new distance
-                        pq.insert(aux_structure["pq"], neighbor, new_distance)
-                        # Update the visited map with the new shortest distance
-                        mp.put(aux_structure["visited"], neighbor, new_distance)
-                        # Set the predecessor for path reconstruction
-                        aux_structure["predecessors"][neighbor] = vertex
-        return aux_structure 
+                    new_distance = current_distance + weight
+                    pq.insert(aux_structure["pq"], (new_distance, neighbor, vertex))
+        return aux_structure
     
 def dist_to(key_v, aux_structure):
     # Use the map's get function to retrieve the distance for key_v

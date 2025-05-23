@@ -71,24 +71,40 @@ def remove (my_heap):
         al.remove_last(my_heap["elements"])
         my_heap["size"] -= 1
         sink(my_heap, 1)
-        return my_heap
+        return first
 
 
 def sink(my_heap, pos):
-    if pos >= size(my_heap) // 2:
-        # Si el nodo es una hoja, no hay nada que hacer
+    size_heap = size(my_heap)
+    left_child_pos = pos * 2
+    right_child_pos = pos * 2 + 1
+
+    # Si no hay hijos, termina
+    if left_child_pos > size_heap:
         return my_heap
-    else:
-        left_child_pos = pos * 2
-        right_child_pos = pos * 2 + 1
-        father = al.get_element(my_heap["elements"], pos)
-        left_child = al.get_element(my_heap["elements"], left_child_pos)
-        right_child = al.get_element(my_heap["elements"], right_child_pos)
-        if priority(my_heap, father, left_child) and priority(my_heap, father, right_child):
-            return my_heap
-        elif priority(my_heap, left_child, right_child):
+
+    father = al.get_element(my_heap["elements"], pos)
+    left_child = al.get_element(my_heap["elements"], left_child_pos)
+
+    # Si solo hay hijo izquierdo
+    if right_child_pos > size_heap:
+        if not priority(my_heap, father, left_child):
             al.exchange(my_heap["elements"], pos, left_child_pos)
-            return sink(my_heap, left_child_pos)
-        else:
-            al.exchange(my_heap["elements"], pos, right_child_pos)
-            return sink(my_heap, right_child_pos)
+            sink(my_heap, left_child_pos)
+        return my_heap
+
+    # Si hay ambos hijos
+    right_child = al.get_element(my_heap["elements"], right_child_pos)
+    # Elige el hijo con mayor prioridad para comparar con el padre
+    if priority(my_heap, left_child, right_child):
+        best_child_pos = left_child_pos
+        best_child = left_child
+    else:
+        best_child_pos = right_child_pos
+        best_child = right_child
+
+    if not priority(my_heap, father, best_child):
+        al.exchange(my_heap["elements"], pos, best_child_pos)
+        sink(my_heap, best_child_pos)
+
+    return my_heap
