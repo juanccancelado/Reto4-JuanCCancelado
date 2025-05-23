@@ -70,14 +70,20 @@ def dist_to(key_v, aux_structure):
         raise Exception("No existe una distancia registrada para el vértice dado.")
     
 def has_path_to(key_v, aux_structure):
-
-    if key_v in aux_structure["visited"]["elements"]:
+    """
+    Retorna True si existe un camino desde el vértice fuente hasta key_v,
+    es decir, si key_v fue visitado por Dijkstra.
+    """
+    if mp.get(aux_structure["visited"], key_v) is not None:
         return True
     else:
-        raise Exception("No existe un camino desde el vértice fuente hasta el vértice dado.")
-
-def path_to(key_v, aux_structure):
+        return False
     
+def path_to(key_v, aux_structure):
+    """
+    Retorna la lista de vértices que conforman el camino más corto desde el vértice fuente
+    hasta key_v, en orden desde el origen hasta el destino.
+    """
     if not has_path_to(key_v, aux_structure):
         raise Exception("No existe un camino desde el vértice fuente hasta el vértice dado.")
     
@@ -85,7 +91,7 @@ def path_to(key_v, aux_structure):
     current = key_v
     while current != aux_structure["source"]:
         path.append(current)
-        current = aux_structure["predecessor"][current]
+        current = aux_structure["predecessors"][current]  # Usa el nombre correcto del diccionario
     path.append(aux_structure["source"])
-    path.reverse()  
+    path.reverse()
     return path

@@ -33,7 +33,8 @@ def test():
     gr.add_edge(grafo, 5, 6, 13)
   
 
-    print(ds.dijkstra(grafo, 0))
+    dijk = ds.dijkstra(grafo, 0)
+    print(ds.path_to(6, dijk))
     
 
     pass
