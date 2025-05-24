@@ -81,7 +81,7 @@ def key_set (my_map):
             lt.add_last(result, me.get_key(i))
      return result
     
-def value_set (my_map):
+def value_set(my_map):
      result = lt.new_list()
      for i in my_map["table"]["elements"]:
         if me.get_value(i) is not None and me.get_value(i) != "__EMPTY__":
