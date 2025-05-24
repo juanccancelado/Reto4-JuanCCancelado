@@ -1,9 +1,9 @@
 from DataStructures.Graph import digraph as gr
 from DataStructures.Graph import dijsktra_structure as ds
-from DataStructures.Map import map_linear_probing as mp
+from DataStructures.Map import map_linear_probing as lp
 from DataStructures.Priority_queue import priority_queue as pq
 from DataStructures.Graph import bfs
-
+from DataStructures.Graph import dfs
 def test():
 
     grafo = gr.new_graph(5)
@@ -33,11 +33,8 @@ def test():
     gr.add_edge(grafo, 5, 2, 1)
     gr.add_edge(grafo, 5, 6, 13)
 
-    bfs.bfs(grafo, 0)
-  
-
-    
-    
+    visited_dfs = dfs.dfs(grafo, 0)
+    print(dfs.path_to(7, visited_dfs))
 
     pass
 
