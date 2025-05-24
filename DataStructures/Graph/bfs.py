@@ -18,8 +18,9 @@ def bfs_vertex(my_graph, source, visited_map):
     q.enqueue(cola_de_recorrido, source)
     while not q.is_empty(cola_de_recorrido):
         llave_actual = q.dequeue(cola_de_recorrido)
-        adjacentes = dg.adjacents(my_graph, llave_actual)
-        tamanio = ar.size(adjacentes)
+        adjacentes = lp.value_set(dg.adjacents(my_graph, llave_actual))
+        print(adjacentes)
+        tamanio = lp.size(adjacentes)
         for i in range(tamanio):
             llave_adjacente_actual = ar.remove_last(adjacentes)
             revision = lp.get(visited_map, llave_adjacente_actual)

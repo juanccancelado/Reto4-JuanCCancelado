@@ -1,14 +1,29 @@
 import time
+import csv
+import os
+from datetime import datetime as dt
+from DataStructures.Tree import red_black_tree as rbt
+from DataStructures.Tree import binary_search_tree as bst
+from DataStructures.List import array_list as ar
+from DataStructures.List import single_linked_list as sl
+from DataStructures.Queue import queue as q
+from DataStructures.Stack import stack as st
+from DataStructures.Map import map_linear_probing as lp
+from DataStructures.Map import map_separate_chaining as sc
+from datetime import datetime as dt
+from DataStructures.Graph import digraph as gr
 
 def new_logic():
     """
     Crea el catalogo para almacenar las estructuras de datos
     """
     #TODO: Llama a las funciónes de creación de las estructuras de datos
-    pass
+
+    catalog = gr.new_graph(10000)
+    
 
 
-# Funciones para la carga de datos
+    return catalog
 
 def load_data(catalog, filename):
     """

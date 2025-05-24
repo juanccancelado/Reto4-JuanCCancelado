@@ -2,6 +2,7 @@ from DataStructures.Graph import digraph as gr
 from DataStructures.Graph import dijsktra_structure as ds
 from DataStructures.Map import map_linear_probing as mp
 from DataStructures.Priority_queue import priority_queue as pq
+from DataStructures.Graph import bfs
 
 def test():
 
@@ -31,10 +32,11 @@ def test():
     gr.add_edge(grafo, 4, 6, 20)
     gr.add_edge(grafo, 5, 2, 1)
     gr.add_edge(grafo, 5, 6, 13)
+
+    bfs.bfs(grafo, 0)
   
 
-    dijk = ds.dijkstra(grafo, 0)
-    print(ds.path_to(6, dijk))
+    
     
 
     pass
